@@ -2,43 +2,32 @@
 #include <unordered_map>
 #include <string>
 #include <cctype>
-
 using namespace std;
 
-int main() {
-    string word;
-    cin >> word;
-
-    unordered_map<char, int> frequency;
-
-    // Count frequencies of characters in the word
-    for (char c : word) {
-        if (islower(c)) // Convert to uppercase if character is lowercase
-            c = toupper(c);
-        frequency[c]++;
+int main()
+{
+    unordered_map<char, int> letterCountMap;
+    string letter;
+    cin >> letter;
+    for(int i=0; i<letter.length(); i++){
+        letter[i] = toupper(letter[i]);
+        letterCountMap[letter[i]]++;
     }
-
-    // Find the character with the maximum frequency
-    char mostFrequentChar = '\0';
-    int maxFrequency = 0;
-    bool multipleMaxFrequency = false;
-
-    for (const auto& pair : frequency) {
-        if (pair.second > maxFrequency) {
-            maxFrequency = pair.second;
-            mostFrequentChar = pair.first;
-            multipleMaxFrequency = false;
-        } else if (pair.second == maxFrequency) {
-            multipleMaxFrequency = true;
+    
+    char mostUsedLetter = '\0';
+    int mostUsedFrequency = 0;
+    int samethingAppeared = 0;
+    for(const auto& p : letterCountMap){
+        if(p.second > mostUsedFrequency){
+            mostUsedFrequency = p.second;
+            mostUsedLetter = p.first;
         }
-    }
-
-    // Output the result
-    if (multipleMaxFrequency) {
-        cout << "?" << endl;
-    } else {
-        cout << mostFrequentChar << endl;
-    }
-
-    return 0;
+            
+        else if(p.second == mostUsedFrequency){
+            mostUsedLetter = '?';
+        }
+    } 
+    
+    cout << mostUsedLetter;
+    
 }
