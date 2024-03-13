@@ -27,12 +27,7 @@ int main()
                 blockDelta = i - ground[j][k];
                 
                 needBlock += blockDelta;
-                if(blockDelta >= 0) {
-                    needTime += blockDelta;
-                }
-                else{
-                    needTime -= blockDelta*2;
-                }
+                needTime += blockDelta >=0 ? blockDelta : -blockDelta*2;
             }
         }
         
