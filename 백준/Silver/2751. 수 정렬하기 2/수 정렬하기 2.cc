@@ -12,7 +12,6 @@ int main() {
         cin >> v[i];
     }
 
-    // Introsort를 사용하여 배열을 정렬합니다.
     sort(v, v + N);
 
     for(int i = 0; i < N; i++) {
