@@ -6,9 +6,10 @@ using namespace std;
 
 vector<vector<int>> vec;
 
-int CalculatePerson(int k, int n){
-    
-    if(k==0) { return n; }
+int CalculatePerson(int k, int n) {
+    if (k == 0) {
+        return n;
+    }
 
     if (vec.size() <= k) {
         vec.resize(k + 1);
@@ -16,15 +17,7 @@ int CalculatePerson(int k, int n){
     if (vec[k].size() <= n) {
         vec[k].resize(n + 1, 0);
     }
-    else{
-        int sum = 0;
-        for(int i=1; i<=n; i++){
-            sum += CalculatePerson(k-1, i);
-        }
-        
-        return sum;
-    }
-    
+
     // 이미 계산된 값이 있다면 그 값을 반환
     if (vec[k][n] != 0) {
         return vec[k][n];
