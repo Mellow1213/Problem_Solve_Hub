@@ -2,20 +2,22 @@
 #include <vector>
 using namespace std;
 
+int M = 1234567891;
+
 long long int paw(int num, int cnt){
     long long int answer = 1;
     for(int i=1; i<=cnt; i++){
-        answer*=num;
+        answer = (answer*num) % M;
     }
-    return answer;
+    return answer%M;
 }
 
 long long int Hash(vector<char> v){
     long long int answer = 0;
     
     for(int i=0; i<v.size(); i++){
-        long long int hash = ((int)v[i]-96)*paw(31, i);
-        answer += hash >= 1234567891 ? hash : hash%1234567891;
+        long long int hash = ((int)v[i]-96)*paw(31, i)%M;
+        answer =(answer + hash)%M;
     }
     return answer;
 }
