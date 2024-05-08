@@ -1,24 +1,29 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 int main()
 {
-    unsigned long long P[101];
-    P[0] = 0;
-    P[1] = 1;
-    P[2] = 1;
-    P[3] = 1;
-    for (int i = 4; i < 101; i++)
-    {
-        P[i] = P[i - 2] + P[i - 3];
-    }
-
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++)
-    {
-        int a;
-        cin >> a;
-        cout << P[a] << endl;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int testCase;
+    
+    cin >> testCase;
+    for(int t=0; t<testCase; t++){        
+        vector<long long> vec;
+        int index;
+        cin >> index;
+        int fixArr[5] = {0, 1, 1, 1, 2};
+        vec.resize(index+1);
+        for(int i=0; i<(index+1>5?5:index+1); i++){
+            vec[i] = fixArr[i];
+        }
+        
+        for(int i=5; i<=index; i++){
+            vec[i] = vec[i-2] + vec[i-3];
+        }
+        
+        cout << vec[index] << '\n';
     }
 }
