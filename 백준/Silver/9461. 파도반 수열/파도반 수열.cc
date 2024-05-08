@@ -21,7 +21,7 @@ int main()
         }
         
         for(int i=5; i<=index; i++){
-            vec[i] = vec[i-2] + vec[i-3];
+            vec[i] = vec[i-1] + vec[i-5];
         }
         
         cout << vec[index] << '\n';
