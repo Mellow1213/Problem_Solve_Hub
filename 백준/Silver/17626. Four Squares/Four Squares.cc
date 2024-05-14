@@ -4,6 +4,7 @@
 #include <vector>
 using namespace std;
 
+// 재분석 필요
 int dp[50001];
 void makeDp(int num) {
 	
