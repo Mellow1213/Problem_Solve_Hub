@@ -18,13 +18,10 @@ int main()
     
     for(int i=0; text[i]!=0; i++){
         if(text[i] == '-' || text[i] == '+'){
-            if(isFirstNum && text[i] == '+'){
                 AddTextByNum(result, temp, isFirstNum);
-            }
-            else{
-                AddTextByNum(result, temp, isFirstNum);
-                isFirstNum = false;
-            }
+                if(text[i] == '-')
+                    isFirstNum = false;
+                
             temp.clear();
         }
         else{
