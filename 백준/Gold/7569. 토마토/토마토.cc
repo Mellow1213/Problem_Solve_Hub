@@ -5,8 +5,9 @@
 using namespace std;
 
 vector<vector<vector<int>>> tomatoBox;
-
 int M, N, H;
+int totalTomatoes = 0;  
+int ripeTomatoes = 0;
 
 struct Box
 {
@@ -16,29 +17,9 @@ struct Box
     int date;
 };
 
-bool AllTomatoIsRiped(){
-    for(int i=0; i<H; i++){
-        for(int j=0; j<N; j++){
-            for(int k=0; k<M; k++){
-                if(tomatoBox[i][j][k] == 0)
-                    return false;
-            }
-        }
-    }
-    return true;
-}
+queue<Box> q;
 
 int BFS(){
-    queue<Box> q;
-    for(int i=0; i<H; i++){
-        for(int j=0; j<N; j++){
-            for(int k=0; k<M; k++){
-                if(tomatoBox[i][j][k] == 1){
-                    q.push({i, j, k, 0});
-                }
-            }
-        }
-    }
     
     int dx[] = {0, 0, 0, 0, 1, -1};
     int dy[] = {0, 0, 1, -1, 0, 0};
@@ -61,6 +42,7 @@ int BFS(){
             if(tomatoBox[z][y][x] == 0){
                 tomatoBox[z][y][x] = 1;
                 q.push({z, y, x, box.date+1});
+                ripeTomatoes++;
             }
         }
     }
@@ -68,18 +50,20 @@ int BFS(){
     return ripDate;
 }
 
-
-
-void SolveProblem(){
-    int answer = BFS();
-    cout << (AllTomatoIsRiped() ? answer : -1);
-}
-
 void InputData(){
     for(int i=0; i<H; i++){
         for(int j=0; j<N; j++){
             for(int k=0; k<M; k++){
                 cin >> tomatoBox[i][j][k];
+            
+                if(tomatoBox[i][j][k]==0){
+                    totalTomatoes++;
+                }
+                else if(tomatoBox[i][j][k] == 1){
+                    totalTomatoes++;
+                    ripeTomatoes++;
+                    q.push({i, j, k, 0});
+                }
             }
         }
     }
@@ -96,10 +80,11 @@ int main()
     
     InputData();
     
-    if(AllTomatoIsRiped()){
+    if(totalTomatoes == ripeTomatoes){ // 받은 토마토가 이미 다 익은 상태인 경우
         cout << 0;
         return 0;
     }
     
-    SolveProblem();
+    int answer = BFS();
+    cout << (totalTomatoes==ripeTomatoes ? answer : -1);
 }
