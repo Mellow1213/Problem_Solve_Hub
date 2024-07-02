@@ -51,7 +51,6 @@ int BFS(){
         q.pop();
         
         for(int i=0; i<6; i++){
-            Box curBox;
             int x = box.M + dx[i];
             int y = box.N + dy[i];
             int z = box.H + dz[i];
@@ -91,7 +90,6 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    Box box;
     cin >> M >> N >> H;
     
     tomatoBox.assign(H, vector<vector<int>>(N, vector<int>(M)));
