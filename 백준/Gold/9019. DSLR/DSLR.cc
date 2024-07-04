@@ -1,8 +1,53 @@
 #include <iostream>
 #include <queue>
-#include <string>
 
 using namespace std;
+
+int D(int reg){
+    return (reg*2)%10000;
+}
+int S(int reg){
+    return reg-1 < 0 ? 9999 : reg-1;
+}
+int L(int reg){
+    return ((reg%1000)*10) + (reg/1000);
+}
+int R(int reg){
+    return (reg/10) + ((reg%10)*1000);
+}
+
+string ch[4] = { "D", "S", "L", "R" };
+int (*calcPtr[4])(int) = { D, S, L, R };
+
+void BFS(int start, int target){
+    queue<pair<int, string>> q; // pair ( 각 시점의 연산 결과 , 현재까지의 연산산 로그 )
+    bool visited[10000] = { false, };
+    
+    q.push(make_pair(start, ""));
+    visited[start] = true;
+    
+    while(!q.empty()){
+        int calcNum = q.front().first;
+        string calcLog = q.front().second;
+            
+        if(calcNum == target){
+            cout << calcLog << '\n';
+            break;
+        }
+            
+        q.pop();
+            
+        for(int i=0; i<4; i++){
+            int tempNum = calcPtr[i](calcNum); // 함수 포인터를 사용하여 함수 호출
+            if(!visited[tempNum]){
+                q.push(make_pair(tempNum, calcLog + ch[i]));
+                visited[tempNum] = true;
+            }
+        }
+    }
+        
+}
+
 
 int main()
 {
@@ -11,62 +56,14 @@ int main()
     cout.tie(NULL);
     
     int reg;
-    
     int testCase;
     
     cin >> testCase;
     
-    
-    char ch[4] = { 'D', 'S', 'L', 'R' };
-    while(testCase>0){
-        queue<pair<int, string>> q; // pair ( 각 시점의 연산 결과 , 현재까지의 연산산 로그 )
-        bool visited[10000] = { false, };
+    for(int i=0; i<testCase; i++){
         int beginNum, endNum;
-        string answer;
-        
         cin >> beginNum >> endNum;
-        visited[beginNum] = true;
-        q.push(make_pair(beginNum, ""));
         
-        while(!q.empty()){
-            int calcNum = q.front().first;
-            string calcLog = q.front().second;
-            
-            if(calcNum == endNum){
-                answer = calcLog;
-                break;
-            }
-            
-            q.pop();
-            
-            int tempNum;
-            
-            tempNum = (calcNum*2)%10000;
-            if(!visited[tempNum]){
-                q.push(make_pair(tempNum, calcLog+"D"));
-                visited[tempNum] = true;
-            }
-            
-            tempNum = calcNum-1 < 0 ? 9999 : calcNum-1;
-            if(!visited[tempNum]){
-                q.push(make_pair(tempNum, calcLog+"S"));
-                visited[tempNum] = true;
-            }
-            
-            tempNum = ((calcNum%1000)*10) + (calcNum/1000);
-            if(!visited[tempNum]){
-                q.push(make_pair(tempNum, calcLog+"L"));
-                visited[tempNum] = true;
-            }
-            
-            tempNum = (calcNum/10) + ((calcNum%10)*1000);
-            if(!visited[tempNum]){
-                q.push(make_pair(tempNum, calcLog+"R"));
-                visited[tempNum] = true;
-            }
-        }
-        
-        cout << answer << '\n';
-        testCase--;
+        BFS(beginNum, endNum);
     }
 }
