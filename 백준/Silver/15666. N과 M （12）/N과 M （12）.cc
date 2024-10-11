@@ -7,7 +7,7 @@ int N, M;
 vector<int> dataset;
 vector<int> selection;
 
-void BackTrack(int depth){
+void BackTrack(int depth, int lastidx){
     if(depth >= M){
         for(const auto& p : selection){
             cout << p << ' ';
@@ -17,14 +17,11 @@ void BackTrack(int depth){
     }
     
     int prev = 0;
-    for(int i=0; i<N; i++){
+    for(int i=lastidx; i<N; i++){
         if(dataset[i] != prev){
-            if(depth != 0)
-                if(selection[depth-1] > dataset[i])
-                    continue;
             prev = dataset[i];
             selection[depth] = dataset[i];
-            BackTrack(depth+1);
+            BackTrack(depth+1, i);
         }
     }
 }
@@ -42,5 +39,5 @@ int main()
     
     sort(dataset.begin(), dataset.end());
     
-    BackTrack(0);
+    BackTrack(0, 0);
 }
