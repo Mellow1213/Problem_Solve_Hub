@@ -8,18 +8,13 @@ int InsertSort(vector<int> &arr)
     for (int i = 1; i < arr.size(); i++)
     {
         int curElement = arr[i];
-        int j;
-        for (j = i - 1; j >= 0; j--)
-        {
-            if (arr[j] > curElement)
-            {
-                arr[j + 1] = arr[j];
-                cnt++;
-            }
-            else
-                break;
+        int j = i;
+        while(j>0 && curElement < arr[j-1]){
+            arr[j] = arr[j-1]; 
+            j--;
+            cnt++;
         }
-        arr[j + 1] = curElement;  // break 했거나 j가 -1이 된 경우 모두 처리
+        arr[j] = curElement;
     }
     return cnt;
 }
