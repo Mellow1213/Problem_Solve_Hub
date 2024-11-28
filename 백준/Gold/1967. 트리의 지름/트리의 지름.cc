@@ -29,9 +29,6 @@ int main(){
     cin >> N;
 
     adj.assign(N+1, vector<pair<int, int>>());
-    for(int i=1; i<N+1; i++){
-        adj[i].reserve(4);
-    }
     visit.assign(N+1, false);
     lens.assign(N+1, 0);
 
