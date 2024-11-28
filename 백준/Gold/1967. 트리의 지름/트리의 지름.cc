@@ -56,7 +56,7 @@ int main(){
     lens.assign(N+1, 0);
 
     DFS(idx, 0);
-    
+
     big = -1;
     for(int i=1; i<lens.size(); i++){
         if(big < lens[i]){
