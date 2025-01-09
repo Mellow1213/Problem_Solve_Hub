@@ -1,11 +1,7 @@
 #include <iostream>
 #include <vector>
-
+#include <cassert>
 using namespace std;
-
-int Max(int a, int b) {
-    return a>b ? a : b;
-}
 
 int main()
 {
@@ -18,14 +14,17 @@ int main()
         cin >> vec[i];
     }
     
-    int Answer = -1e9;
-    for(int i=0; i<N-K+1; i++) {
-        int sum = 0;
-        for(int j=0; j<K; j++) {
-            sum += vec[i+j];
-        }
-        Answer = Max(sum, Answer);
+    int tempSum = 0;
+    for(int i=0; i<K; i++) {
+        tempSum += vec[i];
     }
-    
+    int Answer = tempSum;
+    for(int i=1; i<N-K+1; i++) {
+        tempSum -= vec[i-1];
+        tempSum += vec[i+K-1];
+        if(tempSum > Answer) {
+            Answer = tempSum;
+        }
+    }
     cout << Answer;
 }
