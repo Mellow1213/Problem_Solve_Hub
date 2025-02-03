@@ -7,15 +7,15 @@ using namespace std;
 int main()
 {
     string S;
+    string currentStr;
     unordered_set<string> us;
+    
     cin >> S;
     
     for(int ln = 1; ln <= S.length(); ln++) {
         for(int i=0; i<S.length()-ln+1; i++) {
-            string currentStr = S.substr(i, ln);
-            if(us.find(currentStr) == us.end()) {
-                us.insert(currentStr);
-            }
+            currentStr = S.substr(i, ln);
+            us.insert(currentStr);
         }
     }
     
