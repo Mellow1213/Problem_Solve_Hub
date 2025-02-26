@@ -38,49 +38,37 @@ public:
     void draw();
 };
 
-void LCD::drawSegment(int x, int y, int segment, int size) {
+void LCD::drawSegment(int x, int y, int segment, int size) { // 세그먼트 그리기
     switch (segment) {
-        case 0: // 상단 가로
-            for (int i = 1; i <= size; i++) canvas[y][x + i] = '-';
-            break;
-        case 1: // 좌상단 세로
-            for (int i = 1; i <= size; i++) canvas[y + i][x] = '|';
-            break;
-        case 2: // 우상단 세로
-            for (int i = 1; i <= size; i++) canvas[y + i][x + size + 1] = '|';
-            break;
-        case 3: // 중앙 가로
-            for (int i = 1; i <= size; i++) canvas[y + size + 1][x + i] = '-';
-            break;
-        case 4: // 좌하단 세로
-            for (int i = 1; i <= size; i++) canvas[y + size + 1 + i][x] = '|';
-            break;
-        case 5: // 우하단 세로
-            for (int i = 1; i <= size; i++) canvas[y + size + 1 + i][x + size + 1] = '|';
-            break;
-        case 6: // 하단 가로
-            for (int i = 1; i <= size; i++) canvas[y + 2 * size + 2][x + i] = '-';
-            break;
+        case 0: for(int i=1; i<=size; i++)   canvas[y][x+i]                 = '-'; break;
+        case 1: for(int i=1; i<=size; i++)   canvas[y+i][x]                 = '|'; break;
+        case 2: for(int i=1; i<=size; i++)   canvas[y+i][x+size+1]          = '|'; break;
+        case 3: for(int i=1; i<=size; i++)   canvas[y+size+1][x+i]          = '-'; break;
+        case 4: for(int i=1; i<=size; i++)   canvas[y+size+1+i][x]          = '|';break;
+        case 5: for(int i=1; i<=size; i++)   canvas[y+size+1+i][x+size+1]   = '|'; break;
+        case 6: for(int i=1; i<=size; i++)   canvas[y+2*(size+1)][x+i]      = '-'; break;
     }
 }
 
-void LCD::draw() {
+void LCD::draw() { // 숫자 그리기
     int xOffset = 0;
-    for (char c : displayNum) {
-        int digit = c - '0';
-        for (int seg = 0; seg < 7; seg++) {
-            if (SEGMENT_MAP[digit][seg]) {
-                drawSegment(xOffset, 0, seg, pixSize);
+    for(const auto& p : displayNum) {
+        int currentNum = p - '0';
+        for(int i=0; i<7; i++) {
+            if(SEGMENT_MAP[currentNum][i]) {
+                drawSegment(xOffset, 0, i, pixSize);
             }
         }
-        xOffset += pixSize + 3; // 숫자 간격 조정
+        xOffset+=pixSize+3;
     }
     printCanvas();
 }
 
-void LCD::printCanvas() {
-    for (auto &row : canvas) {
-        for (char c : row) cout << c;
+void LCD::printCanvas() { // 캔버스의 숫자 출력
+    for(const auto& p : canvas) {
+        for(const auto& q : p) {
+            cout << q;
+        }
         cout << '\n';
     }
 }
