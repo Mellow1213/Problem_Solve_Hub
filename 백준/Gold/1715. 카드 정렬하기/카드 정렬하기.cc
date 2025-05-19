@@ -18,7 +18,7 @@ int GetOptimizeSortCount(const vector<int>& arr) {
     }
     
     int sum = 0;
-    while(pq.size() > 2) {
+    while(pq.size() > 1) {
         int temp = 0;
         for(int i=0; i<2; i++) {
             temp += pq.top();
@@ -26,11 +26,6 @@ int GetOptimizeSortCount(const vector<int>& arr) {
         }
         sum += (temp);
         pq.push(temp);
-    }
-    
-    for(int i=0; i<2; i++) {
-        sum += pq.top();
-        pq.pop();
     }
     
     return sum;
