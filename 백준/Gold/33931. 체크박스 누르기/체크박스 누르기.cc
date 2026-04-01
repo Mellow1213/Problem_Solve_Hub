@@ -4,12 +4,12 @@ using namespace std;
 
 int main()
 {
-    int N, M;
+    long long N, M;
     cin >> N >> M;
     
-    int a = M/N;
-    int b = M%N;
+    long long a = M/N;
+    long long b = M%N;
     
-    int answer = (a%2 == 0 ? b : N-b);
+    long long answer = (a%2 == 0 ? b : N-b);
     cout << answer;
 }
